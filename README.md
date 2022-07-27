@@ -1,127 +1,70 @@
-# Shopping cart project assignment solution
+# Getting Started with Create React App
 
-You can find database mock-up under `src/db` folder.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-There are 3 pages in total: home, category (dynamic), checkout.
-You can find them under `src/pages`.
+## Available Scripts
 
-### How to apply filters?
+In the project directory, you can run:
 
-#### Manage state with hooks
+### `npm start`
 
-Filters state is managed with useReducer in a custom hook.
-You can find the custom hook in `src/lib/useFilters.js`.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-Filters state is an object in form of:
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-```js
-const filters = {
-  filterName: value,
-};
+### `npm test`
 
-// Example
-const filters = {
-  delivery: true,
-  expensive: false,
-  maxPrice: 100,
-};
-```
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-In the implementation there is a `createFilterReducer` function.
-It is a higher-order function (a function that returns a function).
-The reason using it is to pass `initialState` to the reducer function.
-This will allow the reducer function to access initial state and create actions
-like RESET.
+### `npm run build`
 
-#### Bind state to inputs
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-There are only simple checkbox filters.
-Please find a reusable component in `src/components/FilterCheckbox.js`
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-The `useFilters` hook is used inside `src/pages/Category.js`.
-The state is then passed to FilterCheckbox component.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-To actually apply filters to some elements you need a computed value
-(products + filters = computed value). Inside Category.js,
-`getComputedProducts` is responsible for producing computed value.
-It's very simple: it takes products and filters states, combines them,
-then produces the result. When displaying items, you must render
-the computed value.
+### `npm run eject`
 
-### How to implement shopping cart?
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-Shopping cart state is managed with useReducer in a context provider component
-`src/lib/cart.context.js`.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Cart context is provided to all components in the app (global state).
-Look inside `src/App.js`
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-For shopping cart you can define 3 main actions:
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-- add item to cart (increase quantity)
-- remove item from cart (decrease quantity)
-- remove item from cart (just remove, without decreasing quantity)
+## Learn More
 
-All of the above actions are defined inside the reducer function in
-cart.context.js.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-Shopping cart state is an array that has the following shape:
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-```js
-const shoppingCart = [
-  {
-    id: 'productId',
-    price: productPrice,
-  },
-  ...
-];
+### Code Splitting
 
-// Example
-const shoppingCart = [
-  {
-    id: '2521fada',
-    price: 140,
-  },
-  {
-    id: 'dwf326a',
-    price: 95,
-  },
-];
-```
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-#### Separation of concerns
+### Analyzing the Bundle Size
 
-Shopping cart is split into `two context providers`: one for state,
-second for dispatch. Passing both in one context does not work good with
-Context API. There are components that don't need access to the state yet
-must update the state (`src/components/Products.js`).
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-#### Cart total
+### Making a Progressive Web App
 
-Cart total and number of items are both computed values
-(derived from shopping cart state). Take a look at `src/components/Navbar.js`.
-Simply transform the state using JavaScript array methods
-such as Array.reduce or Array.filter.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-#### Persist the state
+### Advanced Configuration
 
-To persist shopping cart, you can use either local storage or session storage.
-To sync state with local/session storage, please utilize useEffect.
-useEffect callback (the effect) writes to local/session storage every
-time state changes.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Checkout page
+### Deployment
 
-On the checkout page, shopping cart state must be displayed and managed.
-Actions are already defined in the reducer function.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-How to display added items? In shopping cart state, only product id and price are stored.
-In order to show added products on the page,
-items must be derived from the state and products. Please find `getComputedCheckoutItems`
-inside `src/pages/Checkout.js`.
+### `npm run build` fails to minify
 
-### Additional info
-
-- deployed to github pages
-- styled with Reactstrap (React components for bootstrap)
-- bootstrapped with create-react-app
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
